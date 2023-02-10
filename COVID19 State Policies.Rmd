@@ -1,0 +1,36 @@
+---
+stitle: "COVID-19 State Policies"
+author: "Bernice Boursiquot"
+date: "2023-02-10"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+dataPath = "/Users/bernice/Documents/covid state policies/"
+
+library(dplyr)
+```
+
+```{r Importing data}
+
+dataFile = file.path("/Users", "bernice", "Documents", "covid state policies","data", "COVID-19 US state policy database 3_30_2022.xlsx")
+
+readxl::excel_sheets(dataFile)
+
+dataDictionary = 
+  readxl::read_xlsx(dataFile, sheet = 1, n_max = 4)
+
+statePolicychanges = 
+  readxl::read_xlsx(dataFile, sheet = 1) %>%
+    filter(!row_number() %in% c(1:4))
+
+
+```
+
+```{r Exploring data}
+
+head(statePolicychanges)
+
+```
