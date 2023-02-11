@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 dataPath = "/Users/bernice/Documents/covid state policies/"
 
 library(dplyr)
+library(tidyr)
 ```
 
 ```{r Importing data}
@@ -32,5 +33,13 @@ statePolicychanges =
 ```{r Exploring data}
 
 head(statePolicychanges)
+
+colnames(statePolicychanges)
+
+dataDictionary %>% pivot_longer(everything(), names_to = "", values_to = c("Description"))
+
+statePolicychanges %>%
+  group_by(FMCITE) %>%
+    count()
 
 ```
