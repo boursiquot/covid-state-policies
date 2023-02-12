@@ -12,16 +12,22 @@ dataPath = "/Users/bernice/Documents/covid state policies/"
 
 library(dplyr)
 library(tidyr)
+
+```
+
+```{r Data location}
+
+path = file.path("/Users", "bernice", "Documents", "covid state policies","data")
+
 ```
 
 ```{r Importing data}
 
-dataFile = file.path("/Users", "bernice", "Documents", "covid state policies","data", "COVID-19 US state policy database 3_30_2022.xlsx")
+dataFile = file.path(path, "COVID-19 US state policy database 3_30_2022.xlsx")
 
-readxl::excel_sheets(dataFile)
+codeBookfile = file.path(path, "CodeBook_3_30_2022.xlsx")
 
-dataDictionary = 
-  readxl::read_xlsx(dataFile, sheet = 1, n_max = 4)
+codeBook = readxl::read_xlsx(codeBookfile)
 
 statePolicychanges = 
   readxl::read_xlsx(dataFile, sheet = 1) %>%
@@ -30,32 +36,21 @@ statePolicychanges =
 
 ```
 
+```{r Looking at policy types}
+
+colnames(codeBook)
+
+codeBook %>% 
+  group_by(Category) %>%
+    count() %>%
+      arrange(desc(n))
+
+```
+
 ```{r Exploring data}
 
 head(statePolicychanges)
 
 colnames(statePolicychanges)
-
-attributeType = tibble(rowId = c("variableName", "policyCategory", "variableType", "variableFormat"))
-
-typeof(attributeType)
-
-c(attributeType,dataDictionary)
-
-y =  tibble(attributeType, dataDictionary) 
-
-y %>%
-  pivot_wider(names_from = rowId, values_from = 2:287)
-
-y$rowId
-
-dataDictionary2 = 
-  tibble(attributeType, dataDictionary) %>% 
-    pivot_longer(everything(), values_to = "variableDescriptor", names_to = "variableName") %>%
-      arrange(variableName)
-
-#Policy Types
-
-
 
 ```
