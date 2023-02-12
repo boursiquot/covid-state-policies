@@ -36,10 +36,26 @@ head(statePolicychanges)
 
 colnames(statePolicychanges)
 
-dataDictionary %>% pivot_longer(everything(), names_to = "", values_to = c("Description"))
+attributeType = tibble(rowId = c("variableName", "policyCategory", "variableType", "variableFormat"))
 
-statePolicychanges %>%
-  group_by(FMCITE) %>%
-    count()
+typeof(attributeType)
+
+c(attributeType,dataDictionary)
+
+y =  tibble(attributeType, dataDictionary) 
+
+y %>%
+  pivot_wider(names_from = rowId, values_from = 2:287)
+
+y$rowId
+
+dataDictionary2 = 
+  tibble(attributeType, dataDictionary) %>% 
+    pivot_longer(everything(), values_to = "variableDescriptor", names_to = "variableName") %>%
+      arrange(variableName)
+
+#Policy Types
+
+
 
 ```
